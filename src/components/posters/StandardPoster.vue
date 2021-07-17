@@ -47,21 +47,76 @@
           <img src="@/assets/images/logo.png" alt="logo agencia" />
         </div>
       </div>
+
+      <div class="poster__right-container">
+        <div class="relative h-60">
+          <img
+            class="absolute h-full w-full object-cover"
+            :src="require(`@/assets/${image}`)"
+            alt="Standard"
+          />
+        </div>
+        <div class="poster__extra-info">
+          <div
+            class="
+              poster__bubble
+              top-2
+              left-10
+              bg-gradient-to-b
+              from-purple-200
+              to-blue-400
+            "
+          >
+            <span class="font-bold text-5xl italic">425e</span>
+            <span class="font-semibold italic">2 ADULTOS</span>
+          </div>
+          <div class="poster__bubble top-12 right-10 bg-yellow-400">
+            <span class="font-bold text-2xl italic text-center"
+              >TODO INCLUIDO</span
+            >
+          </div>
+        </div>
+        <div class="relative h-60">
+          <img
+            class="absolute h-full w-full object-cover"
+            :src="require(`@/assets/${image}`)"
+            alt="Standard"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    image: {
+      type: String,
+      required: true,
+    },
+  },
+
+  computed: {
+    toMayus(text) {
+      if (!text) return;
+      return text.toUpperCase();
+    },
+  },
+};
 </script>
 
 <style lang="postcss" scoped>
 .poster {
-  @apply w-desktop h-desktop flex flex-row bg-green-400;
+  @apply w-desktop h-desktop flex flex-row bg-blue-200;
 }
 
 .poster__left-container {
   @apply w-5/12 bg-white my-7 ml-7 mr-3.5 p-10;
+}
+
+.poster__right-container {
+  @apply w-7/12 my-7 mr-7 ml-3.5  flex flex-col justify-between;
 }
 
 .poster__dates {
@@ -86,5 +141,13 @@ export default {};
 
 .poster__social__icon {
   @apply w-8;
+}
+
+.poster__extra-info {
+  @apply relative h-56;
+}
+
+.poster__bubble {
+  @apply absolute flex flex-col justify-center items-center h-44 w-44 p-2 rounded-full;
 }
 </style>

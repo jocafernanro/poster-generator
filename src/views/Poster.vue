@@ -13,7 +13,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import StandardPoster from "@/components/posters/StandardPoster";
-import domtoimage from "dom-to-image";
+import { toPng } from "html-to-image";
 import download from "downloadjs";
 
 export default {
@@ -35,11 +35,9 @@ export default {
       return themeHandler[this.activePoster.id];
     },
     generateThemePoster() {
-      domtoimage
-        .toBlob(document.getElementById("poster"))
-        .then(function (blob) {
-          download(blob, "poster.png");
-        });
+      toPng(document.getElementById("poster")).then(function (dataUrl) {
+        download(dataUrl, "poster.png");
+      });
     },
   },
 

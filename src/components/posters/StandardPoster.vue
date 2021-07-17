@@ -73,7 +73,7 @@
             <span class="font-bold text-5xl italic">425e</span>
             <span class="font-semibold italic">2 ADULTOS</span>
           </div>
-          <div class="poster__bubble top-12 right-10 bg-yellow-400">
+          <div class="poster__bubble top-12 right-10 bg-yellow-300">
             <span class="font-bold text-2xl italic text-center"
               >TODO INCLUIDO</span
             >

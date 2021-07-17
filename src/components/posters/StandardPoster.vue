@@ -45,6 +45,9 @@
             />
           </div>
           <img src="@/assets/images/logo.png" alt="logo agencia" />
+          <p class="poster__warning">
+            Tarifas sujetas a disponibilidad en el momento de la reserva
+          </p>
         </div>
       </div>
 
@@ -124,7 +127,7 @@ export default {
 }
 
 .poster__hotel {
-  @apply flex flex-col items-center py-14 border-b-4 border-t-4 border-green-400 text-center;
+  @apply flex flex-col items-center py-12 border-b-4 border-t-4 border-green-400 text-center;
 }
 
 .poster__hotel__title {
@@ -149,5 +152,9 @@ export default {
 
 .poster__bubble {
   @apply absolute flex flex-col justify-center items-center h-44 w-44 p-2 rounded-full;
+}
+
+.poster__warning {
+  @apply tracking-normal leading-4 mt-2 p-2 bg-yellow-200 rounded-lg text-sm text-left;
 }
 </style>

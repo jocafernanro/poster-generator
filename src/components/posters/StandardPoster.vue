@@ -75,12 +75,12 @@
           <div
             class="
               poster__bubble
-              top-2
-              left-10
               bg-gradient-to-b
               from-purple-200
               to-blue-400
+              z-10
             "
+            :class="[bubble1Position]"
           >
             <span class="font-bold text-4xl italic">{{
               toUpper(bubble1.text1)
@@ -89,11 +89,16 @@
               toUpper(bubble1.text2)
             }}</span>
           </div>
-          <div class="poster__bubble top-12 right-10 bg-yellow-300">
+          <div class="poster__bubble bg-yellow-300" :class="[bubble2Position]">
             <span class="font-bold text-2xl italic text-center">{{
               toUpper(bubble2.text)
             }}</span>
           </div>
+          <img
+            v-if="andaluciaSegura"
+            src="@/assets/images/andalucia-segura.jpg"
+            class="absolute rounded-full w-36 top-24 right-64"
+          />
         </div>
         <div class="relative h-60">
           <img
@@ -117,11 +122,21 @@
       <div class="form__fields-group">
         <div class="form__field">
           <span class="form__label">Fechas</span>
-          <input class="form__input" v-model="dates" type="text" />
+          <input
+            class="form__input"
+            v-model="dates"
+            type="text"
+            placeholder="Aquí van las fechas"
+          />
         </div>
         <div class="form__field">
           <span class="form__label">Nombre del hotel</span>
-          <input class="form__input" v-model="hotel" type="text" />
+          <input
+            class="form__input"
+            v-model="hotel"
+            type="text"
+            placeholder="El nombre del hotel"
+          />
         </div>
         <div class="form__field">
           <span class="form__label">Número de estrellas</span>
@@ -131,11 +146,21 @@
       <div class="form__fields-group">
         <div class="form__field">
           <span class="form__label">Texto 1 - Burbuja 1</span>
-          <input class="form__input" v-model="bubble1.text1" type="text" />
+          <input
+            class="form__input"
+            v-model="bubble1.text1"
+            type="text"
+            placeholder="425e"
+          />
         </div>
         <div class="form__field">
           <span class="form__label">Texo 2 - Burbuja 1</span>
-          <input class="form__input" v-model="bubble1.text2" type="text" />
+          <input
+            class="form__input"
+            v-model="bubble1.text2"
+            type="text"
+            placeholder="2 adultos"
+          />
         </div>
         <div class="form__field">
           <span class="form__label">Texo - Burbuja 2</span>
@@ -144,6 +169,10 @@
       </div>
 
       <div class="form__fields-group">
+        <div class="form__field">
+          <span class="form__label">Andalucía Segura</span>
+          <input v-model="andaluciaSegura" type="checkbox" />
+        </div>
         <div class="form__field">
           <span class="form__label">Imagen superior</span>
           <input type="file" @change="uploadImage(image1, $event)" />
@@ -168,22 +197,30 @@ export default {
 
   data() {
     return {
-      dates: "Aquí van las fechas de la oferta",
-      hotel: "Nombre del hotel",
+      dates: "",
+      hotel: "",
       stars: 5,
       bubble1: {
-        text1: "Texto1",
-        text2: "Texto2",
+        text1: "",
+        text2: "",
       },
       bubble2: {
-        text: "Texto",
+        text: "",
       },
       image1: { image: false },
       image2: { image: false },
+      andaluciaSegura: false,
     };
   },
 
-  computed: {},
+  computed: {
+    bubble1Position() {
+      return this.andaluciaSegura ? "-top-4 left-24" : "top-4 left-10";
+    },
+    bubble2Position() {
+      return this.andaluciaSegura ? "top-12 right-0" : "top-12 right-10";
+    },
+  },
 
   methods: {
     toUpper(text) {
@@ -234,7 +271,7 @@ export default {
 }
 
 .poster__hotel__title {
-  @apply font-bold text-5xl  text-center italic leading-tight mb-4;
+  @apply font-bold text-4xl  text-center italic leading-tight mb-4;
 }
 
 .poster__info {
@@ -250,7 +287,7 @@ export default {
 }
 
 .poster__extra-info {
-  @apply relative h-56;
+  @apply relative h-64;
 }
 
 .poster__bubble {

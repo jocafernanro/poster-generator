@@ -3,7 +3,7 @@
     <!-- POSTER -->
     <div id="poster" class="poster">
       <div class="poster__left-container">
-        <h2 class="poster__dates manrope">{{ toUpper(dates) }}</h2>
+        <p class="poster__dates manrope">{{ toUpper(dates) }}</p>
         <div class="poster__hotel">
           <h1 class="poster__hotel__title playfair">{{ toUpper(hotel) }}</h1>
           <div class="flex flex-row justify-between">
@@ -122,7 +122,7 @@
       <div class="form__fields-group">
         <div class="form__field">
           <span class="form__label">Fechas</span>
-          <input
+          <textarea
             class="form__input"
             v-model="dates"
             type="text"
@@ -224,7 +224,6 @@ export default {
 
   methods: {
     toUpper(text) {
-      console.log(text);
       if (!text) return;
       return text.toUpperCase();
     },
@@ -263,7 +262,7 @@ export default {
 }
 
 .poster__dates {
-  @apply font-bold text-3xl italic tracking-widest text-center mb-8;
+  @apply font-bold text-2xl italic tracking-widest text-center mb-8;
 }
 
 .poster__hotel {
@@ -271,7 +270,7 @@ export default {
 }
 
 .poster__hotel__title {
-  @apply font-bold text-4xl  text-center italic leading-tight mb-4;
+  @apply font-bold text-4xl text-center italic leading-tight mb-4;
 }
 
 .poster__info {

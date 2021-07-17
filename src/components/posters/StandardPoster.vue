@@ -1,24 +1,29 @@
 <template>
   <div class="w-full">
-    <div class="poster">
+    <!-- POSTER -->
+    <div id="poster" class="poster">
       <div class="poster__left-container">
-        <h2 class="poster__dates manrope">DEL 14 AL 18 DE JULIO</h2>
+        <h2 class="poster__dates manrope">{{ toUpper(dates) }}</h2>
         <div class="poster__hotel">
-          <h1 class="poster__hotel__title playfair">HOTELS FENIX FAMILY</h1>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-yellow-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-            />
-          </svg>
+          <h1 class="poster__hotel__title playfair">{{ toUpper(hotel) }}</h1>
+          <div class="flex flex-row justify-between">
+            <svg
+              v-for="star in parseInt(stars)"
+              :key="star"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8 text-yellow-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+              />
+            </svg>
+          </div>
         </div>
         <div class="poster__info">
           <p class="font-semibold text-xl">RESERVAS: 615217674</p>
@@ -54,8 +59,15 @@
       <div class="poster__right-container">
         <div class="relative h-60">
           <img
+            v-if="!image1.image"
             class="absolute h-full w-full object-cover"
             :src="require(`@/assets/${image}`)"
+            alt="Standard"
+          />
+          <img
+            v-else
+            class="absolute h-full w-full object-cover"
+            :src="image1.image"
             alt="Standard"
           />
         </div>
@@ -70,21 +82,75 @@
               to-blue-400
             "
           >
-            <span class="font-bold text-5xl italic">425e</span>
-            <span class="font-semibold italic">2 ADULTOS</span>
+            <span class="font-bold text-4xl italic">{{
+              toUpper(bubble1.text1)
+            }}</span>
+            <span class="font-semibold italic">{{
+              toUpper(bubble1.text2)
+            }}</span>
           </div>
           <div class="poster__bubble top-12 right-10 bg-yellow-300">
-            <span class="font-bold text-2xl italic text-center"
-              >TODO INCLUIDO</span
-            >
+            <span class="font-bold text-2xl italic text-center">{{
+              toUpper(bubble2.text)
+            }}</span>
           </div>
         </div>
         <div class="relative h-60">
           <img
+            v-if="!image2.image"
             class="absolute h-full w-full object-cover"
             :src="require(`@/assets/${image}`)"
             alt="Standard"
           />
+          <img
+            v-else
+            class="absolute h-full w-full object-cover"
+            :src="image2.image"
+            alt="Standard"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA -->
+    <div class="form">
+      <div class="form__fields-group">
+        <div class="form__field">
+          <span class="form__label">Fechas</span>
+          <input class="form__input" v-model="dates" type="text" />
+        </div>
+        <div class="form__field">
+          <span class="form__label">Nombre del hotel</span>
+          <input class="form__input" v-model="hotel" type="text" />
+        </div>
+        <div class="form__field">
+          <span class="form__label">Número de estrellas</span>
+          <input class="form__input" v-model="stars" type="number" />
+        </div>
+      </div>
+      <div class="form__fields-group">
+        <div class="form__field">
+          <span class="form__label">Texto 1 - Burbuja 1</span>
+          <input class="form__input" v-model="bubble1.text1" type="text" />
+        </div>
+        <div class="form__field">
+          <span class="form__label">Texo 2 - Burbuja 1</span>
+          <input class="form__input" v-model="bubble1.text2" type="text" />
+        </div>
+        <div class="form__field">
+          <span class="form__label">Texo - Burbuja 2</span>
+          <input class="form__input" v-model="bubble2.text" type="text" />
+        </div>
+      </div>
+
+      <div class="form__fields-group">
+        <div class="form__field">
+          <span class="form__label">Imagen superior</span>
+          <input type="file" @change="uploadImage(image1, $event)" />
+        </div>
+        <div class="form__field">
+          <span class="form__label">Imagen inferior</span>
+          <input type="file" @change="uploadImage(image2, $event)" />
         </div>
       </div>
     </div>
@@ -100,10 +166,47 @@ export default {
     },
   },
 
-  computed: {
-    toMayus(text) {
+  data() {
+    return {
+      dates: "Aquí van las fechas de la oferta",
+      hotel: "Nombre del hotel",
+      stars: 5,
+      bubble1: {
+        text1: "Texto1",
+        text2: "Texto2",
+      },
+      bubble2: {
+        text: "Texto",
+      },
+      image1: { image: false },
+      image2: { image: false },
+    };
+  },
+
+  computed: {},
+
+  methods: {
+    toUpper(text) {
+      console.log(text);
       if (!text) return;
       return text.toUpperCase();
+    },
+    uploadImage(item, e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(item, files[0]);
+    },
+    createImage(item, file) {
+      //   var image = new Image();
+      var reader = new FileReader();
+
+      reader.onload = (e) => {
+        item.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    removeImage: function (item) {
+      item.image = false;
     },
   },
 };
@@ -156,5 +259,25 @@ export default {
 
 .poster__warning {
   @apply tracking-normal leading-4 mt-2 p-2 bg-yellow-200 rounded-lg text-sm text-left;
+}
+
+.form {
+  @apply flex flex-col mt-4;
+}
+
+.form__fields-group {
+  @apply flex flex-row justify-between;
+}
+
+.form__field {
+  @apply flex flex-col flex-1 m-4;
+}
+
+.form__label {
+  @apply font-bold text-xl;
+}
+
+.form__input {
+  @apply border border-gray-200 p-3 rounded-md;
 }
 </style>

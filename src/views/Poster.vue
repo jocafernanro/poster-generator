@@ -4,15 +4,17 @@
       :is="getPosterComponent()"
       :image="activePoster.image"
     ></component>
-    <button @click="generateThemePoster">Generar</button>
+    <button class="generate-button" @click="generateThemePoster">
+      Generar poster
+    </button>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 import StandardPoster from "@/components/posters/StandardPoster";
-// import domtoimage from "dom-to-image";
-// import download from "downloadjs";
+import domtoimage from "dom-to-image";
+import download from "downloadjs";
 
 export default {
   components: {
@@ -33,9 +35,11 @@ export default {
       return themeHandler[this.activePoster.id];
     },
     generateThemePoster() {
-      //   domtoimage.toBlob(document.getElementById("theme")).then(function (blob) {
-      //     download(blob, "my-node.png");
-      //   });
+      domtoimage
+        .toBlob(document.getElementById("poster"))
+        .then(function (blob) {
+          download(blob, "poster.png");
+        });
     },
   },
 
@@ -45,4 +49,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="postcss" scoped>
+.generate-button {
+  @apply p-4 rounded-lg font-bold text-lg bg-green-500 text-white ml-4;
+}
+</style>

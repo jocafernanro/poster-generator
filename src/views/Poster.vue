@@ -13,8 +13,8 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import StandardPoster from "@/components/posters/StandardPoster";
-import { toPng } from "html-to-image";
 import download from "downloadjs";
+import html2canvas from "html2canvas";
 
 export default {
   components: {
@@ -35,8 +35,9 @@ export default {
       return themeHandler[this.activePoster.id];
     },
     generateThemePoster() {
-      toPng(document.getElementById("poster")).then(function (dataUrl) {
-        download(dataUrl, "poster.png");
+      window.scrollTo(0, 0);
+      html2canvas(document.getElementById("poster")).then(function (canvas) {
+        download(canvas.toDataURL(), "poster.png");
       });
     },
   },
@@ -50,5 +51,9 @@ export default {
 <style lang="postcss" scoped>
 .generate-button {
   @apply p-4 rounded-lg font-bold text-lg bg-green-500 text-white ml-4;
+}
+
+.modal {
+  @apply top-0 w-full h-full z-50 flex flex-col justify-center fixed items-center;
 }
 </style>

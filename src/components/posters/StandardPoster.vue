@@ -291,6 +291,7 @@ export default {
       return this.bubble3.active ? "top-12 right-0" : "top-12 right-10";
     },
     colorActive() {
+      console.log(this.colors.find((color) => color.active) || this.colors[0]);
       return this.colors.find((color) => color.active) || this.colors[0];
     },
   },

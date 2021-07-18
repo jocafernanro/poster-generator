@@ -24,6 +24,11 @@
               />
             </svg>
           </div>
+          <img
+            v-if="andaluciaSegura"
+            src="@/assets/images/andalucia-segura.jpg"
+            class="absolute rounded-full w-14 top-2 left-0"
+          />
         </div>
         <div class="poster__info">
           <p class="font-semibold text-xl">RESERVAS: 615217674</p>
@@ -94,11 +99,25 @@
               toUpper(bubble2.text)
             }}</span>
           </div>
-          <img
-            v-if="andaluciaSegura"
-            src="@/assets/images/andalucia-segura.jpg"
-            class="absolute rounded-full w-36 top-24 right-64"
-          />
+          <div
+            v-if="bubble3.active"
+            class="
+              poster__bubble
+              top-24
+              right-64
+              bg-gradient-to-b
+              from-green-200
+              to-blue-400
+              z-10
+            "
+          >
+            <span class="font-bold text-4xl italic">{{
+              toUpper(bubble3.text1)
+            }}</span>
+            <span class="font-semibold italic">{{
+              toUpper(bubble3.text2)
+            }}</span>
+          </div>
         </div>
         <div class="relative h-60">
           <img
@@ -143,6 +162,7 @@
           <input class="form__input" v-model="stars" type="number" />
         </div>
       </div>
+
       <div class="form__fields-group">
         <div class="form__field">
           <span class="form__label">Texto 1 - Burbuja 1</span>
@@ -165,6 +185,27 @@
         <div class="form__field">
           <span class="form__label">Texo - Burbuja 2</span>
           <input class="form__input" v-model="bubble2.text" type="text" />
+        </div>
+      </div>
+
+      <div class="form__fields-group">
+        <div class="form__field">
+          <span class="form__label">Texto 1 - Burbuja 3</span>
+          <input
+            class="form__input"
+            v-model="bubble3.text1"
+            type="text"
+            placeholder="425e"
+          />
+        </div>
+        <div class="form__field">
+          <span class="form__label">Texo 2 - Burbuja 3</span>
+          <input
+            class="form__input"
+            v-model="bubble3.text2"
+            type="text"
+            placeholder="2 adultos y 1 niño"
+          />
         </div>
       </div>
 
@@ -207,6 +248,11 @@ export default {
       bubble2: {
         text: "",
       },
+      bubble3: {
+        active: false,
+        text1: "",
+        text2: "",
+      },
       image1: { image: false },
       image2: { image: false },
       andaluciaSegura: false,
@@ -215,10 +261,19 @@ export default {
 
   computed: {
     bubble1Position() {
-      return this.andaluciaSegura ? "-top-4 left-24" : "top-4 left-10";
+      return this.bubble3.active ? "-top-4 left-24" : "top-4 left-10";
     },
     bubble2Position() {
-      return this.andaluciaSegura ? "top-12 right-0" : "top-12 right-10";
+      return this.bubble3.active ? "top-12 right-0" : "top-12 right-10";
+    },
+  },
+
+  watch: {
+    "bubble3.text1": function (newVal) {
+      this.bubble3.active = !!newVal;
+    },
+    "bubble3.text2": function (newVal) {
+      this.bubble3.active = !!newVal;
     },
   },
 
@@ -266,7 +321,7 @@ export default {
 }
 
 .poster__hotel {
-  @apply flex flex-col items-center py-12 border-b-4 border-t-4 border-green-400 text-center;
+  @apply relative flex flex-col items-center py-12 border-b-4 border-t-4 border-green-400 text-center;
 }
 
 .poster__hotel__title {

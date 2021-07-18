@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <!-- POSTER -->
-    <div id="poster" class="poster">
+    <div id="poster" class="poster" :class="[colorActive.color]">
       <div class="poster__left-container">
         <p class="poster__dates manrope">{{ toUpper(dates) }}</p>
         <div class="poster__hotel">
@@ -140,6 +140,24 @@
     <div class="form">
       <div class="form__fields-group">
         <div class="form__field">
+          <span class="form__label">Colores</span>
+          <div class="flex flex-row">
+            <div
+              v-for="color in colors"
+              :key="color.id"
+              class="form__color-picker"
+              :class="[
+                color.color,
+                { 'border-2 border-yellow-400': color.active },
+              ]"
+              @click="setColorActive(color.id)"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form__fields-group">
+        <div class="form__field">
           <span class="form__label">Fechas</span>
           <textarea
             class="form__input"
@@ -238,6 +256,12 @@ export default {
 
   data() {
     return {
+      colors: [
+        { id: "blue", color: "bg-blue-200", active: false },
+        { id: "green", color: "bg-green-200", active: false },
+        { id: "purple", color: "bg-purple-200", active: false },
+        { id: "yellow", color: "bg-yellow-200", active: false },
+      ],
       dates: "",
       hotel: "",
       stars: 5,
@@ -266,6 +290,10 @@ export default {
     bubble2Position() {
       return this.bubble3.active ? "top-12 right-0" : "top-12 right-10";
     },
+    colorActive() {
+      console.log(this.colors.find((color) => color.active) || this.colors[0]);
+      return this.colors.find((color) => color.active) || this.colors[0];
+    },
   },
 
   watch: {
@@ -278,6 +306,15 @@ export default {
   },
 
   methods: {
+    isColorActive(colorId) {
+      const color = this.colors.find((color) => color.id === colorId);
+      return color?.active;
+    },
+    setColorActive(colorId) {
+      this.colors.forEach(
+        (color) => (color.active = color.id === colorId && !color.active)
+      );
+    },
     toUpper(text) {
       if (!text) return;
       return text.toUpperCase();
@@ -305,7 +342,7 @@ export default {
 
 <style lang="postcss" scoped>
 .poster {
-  @apply w-desktop h-desktop flex flex-row bg-blue-200;
+  @apply w-desktop h-desktop flex flex-row;
 }
 
 .poster__left-container {
@@ -370,5 +407,9 @@ export default {
 
 .form__input {
   @apply border border-gray-200 p-3 rounded-md;
+}
+
+.form__color-picker {
+  @apply w-14 h-14 rounded-md mr-2 cursor-pointer;
 }
 </style>

@@ -1,11 +1,16 @@
 <template>
   <div class="container mx-auto">
     <component
+      ref="poster"
       :is="getPosterComponent()"
+      :posterId="activePoster.id"
       :image="activePoster.image"
     ></component>
     <button class="generate-button" @click="generateThemePoster">
       Generar poster
+    </button>
+    <button class="clean-form-button" @click="cleanPosterForm">
+      Limpiar formulario
     </button>
   </div>
 </template>
@@ -42,6 +47,9 @@ export default {
           download(blob, "poster.png");
         });
     },
+    cleanPosterForm() {
+      this.$refs.poster.cleanForm();
+    },
   },
 
   mounted() {
@@ -53,5 +61,8 @@ export default {
 <style lang="postcss" scoped>
 .generate-button {
   @apply p-4 rounded-lg font-bold text-lg bg-green-500 text-white ml-4;
+}
+.clean-form-button {
+  @apply p-4 rounded-lg font-bold text-lg bg-red-500 text-white ml-4;
 }
 </style>

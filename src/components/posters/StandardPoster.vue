@@ -248,6 +248,10 @@
 <script>
 export default {
   props: {
+    posterId: {
+      type: String,
+      required: true,
+    },
     image: {
       type: String,
       required: true,
@@ -258,28 +262,52 @@ export default {
     return {
       colors: [
         { id: "blue", color: "bg-blue-200", active: false },
+
         { id: "green", color: "bg-green-200", active: false },
         { id: "purple", color: "bg-purple-200", active: false },
         { id: "yellow", color: "bg-yellow-200", active: false },
+        { id: "red", color: "bg-red-200", active: false },
+        { id: "pink", color: "bg-pink-200", active: false },
       ],
-      dates: "",
-      hotel: "",
-      stars: 5,
+      dates:
+        localStorage.getItem(`postergenerator.${this.posterId}.dates`) || "",
+      hotel:
+        localStorage.getItem(`postergenerator.${this.posterId}.hotel`) || "",
+      stars:
+        localStorage.getItem(`postergenerator.${this.posterId}.stars`) || 5,
       bubble1: {
-        text1: "",
-        text2: "",
+        text1:
+          localStorage.getItem(
+            `postergenerator.${this.posterId}.bubble1.text1`
+          ) || "",
+        text2:
+          localStorage.getItem(
+            `postergenerator.${this.posterId}.bubble1.text2`
+          ) || "",
       },
       bubble2: {
-        text: "",
+        text:
+          localStorage.getItem(
+            `postergenerator.${this.posterId}.bubble2.text`
+          ) || "",
       },
       bubble3: {
         active: false,
-        text1: "",
-        text2: "",
+        text1:
+          localStorage.getItem(
+            `postergenerator.${this.posterId}.bubble3.text1`
+          ) || "",
+        text2:
+          localStorage.getItem(
+            `postergenerator.${this.posterId}.bubble3.text2`
+          ) || "",
       },
       image1: { image: false },
       image2: { image: false },
-      andaluciaSegura: false,
+      andaluciaSegura:
+        localStorage.getItem(
+          `postergenerator.${this.posterId}.andaluciaSegura`
+        ) || false,
     };
   },
 
@@ -296,15 +324,67 @@ export default {
   },
 
   watch: {
+    dates(newVal) {
+      localStorage.setItem(`postergenerator.${this.posterId}.dates`, newVal);
+    },
+    hotel(newVal) {
+      localStorage.setItem(`postergenerator.${this.posterId}.hotel`, newVal);
+    },
+    stars(newVal) {
+      localStorage.setItem(`postergenerator.${this.posterId}.stars`, newVal);
+    },
+    "bubble1.text1"(newVal) {
+      localStorage.setItem(
+        `postergenerator.${this.posterId}.bubble1.text1`,
+        newVal
+      );
+    },
+    "bubble1.text2"(newVal) {
+      localStorage.setItem(
+        `postergenerator.${this.posterId}.bubble1.text2`,
+        newVal
+      );
+    },
+    "bubble2.text"(newVal) {
+      localStorage.setItem(
+        `postergenerator.${this.posterId}.bubble2.text`,
+        newVal
+      );
+    },
     "bubble3.text1": function (newVal) {
       this.bubble3.active = !!newVal;
+      localStorage.setItem(
+        `postergenerator.${this.posterId}.bubble3.text1`,
+        newVal
+      );
     },
     "bubble3.text2": function (newVal) {
       this.bubble3.active = !!newVal;
+      localStorage.setItem(
+        `postergenerator.${this.posterId}.bubble3.text2`,
+        newVal
+      );
+    },
+    andaluciaSegura(newVal) {
+      localStorage.setItem(
+        `postergenerator.${this.posterId}.andaluciaSegura`,
+        newVal
+      );
     },
   },
 
   methods: {
+    cleanForm() {
+      this.dates = "";
+      this.hotel = "";
+      this.stars = 5;
+      this.andaluciaSegura = false;
+      this.bubble1.text1 = "";
+      this.bubble1.text2 = "";
+      this.bubble2.text = "";
+      this.bubble3.text1 = "";
+      this.bubble3.text2 = "";
+    },
     isColorActive(colorId) {
       const color = this.colors.find((color) => color.id === colorId);
       return color?.active;

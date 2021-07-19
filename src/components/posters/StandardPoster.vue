@@ -291,7 +291,6 @@ export default {
       return this.bubble3.active ? "top-12 right-0" : "top-12 right-10";
     },
     colorActive() {
-      console.log(this.colors.find((color) => color.active) || this.colors[0]);
       return this.colors.find((color) => color.active) || this.colors[0];
     },
   },
@@ -382,7 +381,7 @@ export default {
 }
 
 .poster__bubble {
-  @apply absolute flex flex-col justify-center items-center h-44 w-44 p-2 rounded-full;
+  @apply absolute flex flex-col justify-center items-center h-44 w-44 p-4 text-center rounded-full;
 }
 
 .poster__warning {
